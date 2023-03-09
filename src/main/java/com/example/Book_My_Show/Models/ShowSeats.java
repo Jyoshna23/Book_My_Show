@@ -2,11 +2,20 @@ package com.example.Book_My_Show.Models;
 
 import com.example.Book_My_Show.Enums.SeatType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.Date;
 
 @Entity
 @Table(name="show_seats")
+@Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class ShowSeats {
 
 
@@ -17,9 +26,9 @@ public class ShowSeats {
 
     private int price;
 
-    private int seatNo;
+    private String seatNo;
 
-    private LocalTime bookedTime;
+    private Date bookedTime;
 
     @Enumerated(value = EnumType.STRING)
     private SeatType seatType;
@@ -30,4 +39,6 @@ public class ShowSeats {
     @ManyToOne
     @JoinColumn
     private Show show;
+
+
 }

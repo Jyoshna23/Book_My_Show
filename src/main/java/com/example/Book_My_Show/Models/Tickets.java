@@ -1,20 +1,28 @@
 package com.example.Book_My_Show.Models;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name="tickets")
+@Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Tickets {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int price;
+    private int totalAmount; //totalAmount
 
     private String movieName;
 
@@ -22,8 +30,12 @@ public class Tickets {
 
     private String theatreName;
 
-    @CreationTimestamp
-    private Date showDate;
+
+    private LocalDate showDate;
+
+    private String ticketId = UUID.randomUUID().toString();
+
+    private String bookedSeats;
 
 
     //Tickets entity is a child entity for user.
@@ -36,4 +48,6 @@ public class Tickets {
     @ManyToOne
     @JoinColumn
     private Show show;
+
+
 }
