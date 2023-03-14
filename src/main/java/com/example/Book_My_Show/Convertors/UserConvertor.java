@@ -10,7 +10,8 @@ public class UserConvertor {
     public static User convertDtoToEntity(UserEntryDto userEntryDto){
         User user = User.builder().age(userEntryDto.getAge()).name(userEntryDto.getName())
                 .email(userEntryDto.getEmail()).mobile(userEntryDto.getMobile())
-                        .address(userEntryDto.getAddress()).build();
+                        .address(userEntryDto.getAddress())
+                .userName(userEntryDto.getUserName()).password(userEntryDto.getPassword()).build();
         return user;
 
     }

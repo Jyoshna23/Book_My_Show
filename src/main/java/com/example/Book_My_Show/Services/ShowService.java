@@ -1,7 +1,9 @@
 package com.example.Book_My_Show.Services;
 
+import com.example.Book_My_Show.BookMyShowApplication;
 import com.example.Book_My_Show.Convertors.ShowConvertor;
 import com.example.Book_My_Show.EntryDTOs.ShowEntryDto;
+import com.example.Book_My_Show.EntryDTOs.ShowResponseDto;
 import com.example.Book_My_Show.Enums.SeatType;
 import com.example.Book_My_Show.Models.*;
 import com.example.Book_My_Show.Repositories.MovieRepository;
@@ -10,8 +12,13 @@ import com.example.Book_My_Show.Repositories.TheatreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.sql.Time.*;
 
 @Service
 public class ShowService {
@@ -24,6 +31,8 @@ public class ShowService {
 
     @Autowired
     TheatreRepository theatreRepository;
+
+
 
 
     public String addShow(ShowEntryDto showEntryDto){
@@ -92,5 +101,20 @@ public class ShowService {
             showSeatsList.add(showSeats);
         }
         return showSeatsList;
+    }
+
+
+    public List<LocalTime> getShowTimeForTheatreAndMovie(int theatreId, int movieId ){
+
+        List<Time> time = showRepository.getShowTimeForTheatreAndMovie(theatreId, movieId);
+        List<LocalTime> localTimes = convertToLocalTime(time);
+        return localTimes;
+    }
+
+
+    public List<LocalTime> convertToLocalTime(List<Time> times) {
+        return times.stream()
+                .map(time -> time.toLocalTime())
+                .collect(Collectors.toList());
     }
 }

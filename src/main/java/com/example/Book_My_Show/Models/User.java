@@ -31,6 +31,10 @@ public class User {
 
     private String address;
 
+    private String userName;
+
+    private String password;
+
 
     // User has a relationship with ticket.
     //One user can book any number of tickets. so we have one to many relationship.

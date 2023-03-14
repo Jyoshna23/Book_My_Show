@@ -27,6 +27,8 @@ public class TicketService {
 
  @Autowired
     UserRepository userRepository;
+
+
  public String bookTicket(TicketEntryDto ticketEntryDto) throws Exception{
 
      //create Ticket entity by converting from ticket dto
@@ -57,15 +59,16 @@ public class TicketService {
      }
      tickets.setTotalAmount(totalAmount);
 
-
-     String allottedSeats = getAllottedSeatsForShow(requestedSeats);
-     tickets.setBookedSeats(allottedSeats);
-
      //Setting other attributes
      tickets.setMovieName(show.getMovie().getName());
      tickets.setShowTime(show.getShowTime());
      tickets.setShowDate(show.getShowDate());
      tickets.setTheatreName(show.getTheatre().getName());
+
+     String allottedSeats = getAllottedSeatsForShow(requestedSeats);
+     tickets.setBookedSeats(allottedSeats);
+
+
 
      //setting foreign key attributes
 
@@ -86,6 +89,18 @@ public class TicketService {
      user.setTicketsList(ticketsList1);
 
      userRepository.save(user);
+
+//     String body = "Hi this is to confirm your booking for seat No "+allotedSeats +"for the movie : " + ticketEntity.getMovieName();
+//
+//
+//     MimeMessage mimeMessage=javaMailSender.createMimeMessage();
+//     MimeMessageHelper mimeMessageHelper=new MimeMessageHelper(mimeMessage,true);
+//     mimeMessageHelper.setFrom("backeendacciojob@gmail.com");
+//     mimeMessageHelper.setTo(userEntity.getEmail());
+//     mimeMessageHelper.setText(body);
+//     mimeMessageHelper.setSubject("Confirming your booked Ticket");
+//
+//     javaMailSender.send(mimeMessage);
 
 
 
@@ -130,5 +145,23 @@ public class TicketService {
          }
      }
      return true;
+ }
+
+ public String cancelTicket(int ticketId){
+     Tickets tickets = ticketRepository.findById(ticketId).get();
+
+     ticketRepository.delete(tickets);
+
+
+     return "ticket cancelled successfully";
+ }
+
+ public List<String> ticketsBookedByUser(int userId){
+    return ticketRepository.ticketsBookedByUser(userId);
+ }
+
+
+ public int totalCollectionsForAMovie(String name){
+     return ticketRepository.totalCollectionsForAMovie(name);
  }
 }

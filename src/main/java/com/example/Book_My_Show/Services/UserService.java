@@ -19,4 +19,27 @@ public class UserService {
 
         return "User added Successfully ";
     }
+
+
+    public String getUserName(int id){
+        User user = userRepository.findById(id).get();
+        return user.getUserName();
+    }
+
+    public String updatePassword(int id,String password){
+        User user = userRepository.findById(id).get();
+        user.setPassword(password);
+        userRepository.save(user);
+        return "Password updated successfully";
+    }
+
+    public String updatePassword(int id,String userName,String password){
+        User user = userRepository.findById(id).get();
+        user.setUserName(userName);
+        user.setPassword(password);
+        userRepository.save(user);
+        return "UserName and Password updated successfully";
+    }
+
+
 }

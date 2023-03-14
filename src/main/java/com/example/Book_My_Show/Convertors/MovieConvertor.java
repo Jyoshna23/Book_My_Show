@@ -8,7 +8,9 @@ public class MovieConvertor {
 
     public static Movie movieDtoToEntity(MovieEntryDto movieEntryDto) {
         Movie movie = Movie.builder().name(movieEntryDto.getName()).rating(movieEntryDto.getRating())
-                .duration(movieEntryDto.getDuration()).build();
+                .duration(movieEntryDto.getDuration()).genre(movieEntryDto.getGenre())
+                .language(movieEntryDto.getLanguage())
+                .build();
         return movie;
     }
 }
